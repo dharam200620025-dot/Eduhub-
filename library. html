@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Library — StudyHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <div class="brand-title">Study<span>Hub</span></div>
+      </a>
+      <nav class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/library" class="nav-link active">My Library</a>
+        <a href="/admin" class="nav-link">Admin</a>
+      </nav>
+      <a href="/" class="btn btn-outline btn-sm">← Browse More</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:32px;">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Student Dashboard</div>
+        <h1 class="section-title">My Downloads & Library</h1>
+        <p class="section-sub" id="studentInfo">Aapke saare unlocked PDFs, lectures aur payment receipts yahan safe hain.</p>
+      </div>
+    </div>
+
+    <div id="libraryGrid" class="catalog-grid"></div>
+  </main>
+
+  <!-- Printable Receipt Modal -->
+  <div id="receiptModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Payment Receipt — StudyHub</h3>
+        <button class="close-btn" onclick="document.getElementById('receiptModal').classList.remove('open')">×</button>
+      </div>
+      <div id="receiptBody" class="sample-page"></div>
+      <button class="btn btn-primary" style="width:100%;" onclick="window.print()">🖨 Print / Save Receipt PDF</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="/js/library.js"></script>
+</body>
+</html>
+  
