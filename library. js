@@ -1,0 +1,82 @@
+function getToken() { return localStorage.getItem('studyhub_token') || ''; }
+function getUser() {
+  try { return JSON.parse(localStorage.getItem('studyhub_user') || 'null'); } catch { return null; }
+}
+
+async function loadLibrary() {
+  const grid = document.getElementById('libraryGrid');
+  const token = getToken();
+  const user = getUser();
+
+  if (!token || !user) {
+    grid.innerHTML = `<div class="panel" style="grid-column:1/-1;text-align:center;">
+      <h3>Login Required</h3>
+      <p style="margin:8px 0 16px;color:#475569;">Apni Library dekhne ke liye Home page par Email OTP se login karein.</p>
+      <a href="/" class="btn btn-primary">Go to Home & Login</a>
+    </div>`;
+    return;
+  }
+
+  document.getElementById('studentInfo').textContent = `Logged in as ${user.full_name} (${user.email})`;
+
+  const res = await fetch('/api/resources/my-library', {
+    headers: { Authorization: 'Bearer ' + token }
+  });
+  const data = await res.json();
+  const items = data.library || [];
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="panel" style="grid-column:1/-1;text-align:center;">
+      Abhi aapki library khali hai. <a href="/#catalog" style="color:#0A49D8;font-weight:700;">Resources explore karein →</a>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map((entry) => {
+    const r = entry.resource;
+    return `
+      <article class="item-card">
+        <div>
+          <div class="badges">
+            <span class="badge b-cat">${r.category}</span>
+            <span class="badge b-free">${entry.amount_paid > 0 ? 'Paid ₹' + entry.amount_paid : 'Free Access'}</span>
+          </div>
+          <h4 style="margin-top:10px;">${r.title}</h4>
+          <p style="margin-top:6px;">Unlocked on ${new Date(entry.purchased_at).toLocaleDateString('en-IN')}</p>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-primary btn-sm" onclick="downloadFromLibrary('${r.id}')">
+            ${r.resource_type === 'video' ? '▶ Watch Lecture' : '⬇ Secure PDF'}
+          </button>
+          <button class="btn btn-outline btn-sm" onclick='showReceipt(${JSON.stringify(entry)})'>🧾 Receipt</button>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+async function downloadFromLibrary(id) {
+  const res = await fetch('/api/resources/download/' + id, {
+    headers: { Authorization: 'Bearer ' + getToken() }
+  });
+  const data = await res.json();
+  if (data.downloadUrl) window.open(data.downloadUrl, '_blank');
+  else if (data.videoUrl) window.open(data.videoUrl, '_blank');
+}
+
+function showReceipt(entry) {
+  const user = getUser();
+  document.getElementById('receiptBody').innerHTML = `
+    <p><strong>Student:</strong> ${user.full_name} (${user.email})</p>
+    <p><strong>Item:</strong> ${entry.resource.title}</p>
+    <p><strong>Order ID:</strong> ${entry.order_id || 'N/A'}</p>
+    <p><strong>Payment ID:</strong> ${entry.payment_id || 'N/A'}</p>
+    <p><strong>Amount Paid:</strong> ₹${entry.amount_paid} INR</p>
+    <p><strong>Date:</strong> ${new Date(entry.purchased_at).toLocaleString('en-IN')}</p>
+    <p style="color:#166534;font-weight:700;margin-top:8px;">Status: PAID & VERIFIED</p>
+  `;
+  document.getElementById('receiptModal').classList.add('open');
+}
+
+loadLibrary();
+    
