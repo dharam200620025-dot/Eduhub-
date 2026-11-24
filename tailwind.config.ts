@@ -1,0 +1,2 @@
+import type { Config } from "tailwindcss";
+export default { content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"], theme: { extend: { colors: { navy: "#0B2447", gold: "#FACC15", paper: "#F8FAFC" } } }, plugins: [] } satisfies Config;

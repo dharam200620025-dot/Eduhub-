@@ -1,0 +1,3 @@
+import Link from "next/link";
+type Item={id:string;title:string;description:string;category:string;price:number;kind:"pdf"|"video";icon?:string;is_free:boolean};
+export default function ResourceCard({item}:{item:Item}){return <article className="card flex flex-col items-center p-6 text-center"><div className="mb-3 text-5xl">{item.icon|| (item.kind==="video"?"▶️":"📚")}</div><span className="tag">{item.is_free?"Free":`₹${item.price}`}</span><h3 className="mt-3 text-lg font-extrabold">{item.title}</h3><p className="mt-2 min-h-12 text-sm text-slate-500">{item.description}</p><Link className="btn btn-dark mt-4 w-full" href={`/materials/${item.id}`}>{item.kind==="video"?"View lecture":"Preview & access"} →</Link></article>}
