@@ -1,0 +1,57 @@
+const { hasSupabase, supabaseAdmin, readLocalDB } = require('../config/db');
+
+// 1. Student Login Check (Downloads, My Library & Payment ke liye)
+async function verifyAuth(req, res, next) {
+  try {
+    const authHeader = req.headers.authorization || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
+
+    if (!token) {
+      return res.status(401).json({ error: 'Please login first to continue.' });
+    }
+
+    // Agar Supabase connected hai (Live Mode)
+    if (hasSupabase) {
+      const { data, error } = await supabaseAdmin.auth.getUser(token);
+      if (error || !data || !data.user) {
+        return res.status(401).json({ error: 'Invalid or expired session.' });
+      }
+      req.user = data.user;
+      return next();
+    }
+
+    // Local Demo Mode (Token format: "local:<userId>")
+    if (token.startsWith('local:')) {
+      const userId = token.slice(6);
+      const db = readLocalDB();
+      const user = db.users.find((u) => u.id === userId);
+      if (!user) {
+        return res.status(401).json({ error: 'Session expired. Please login again.' });
+      }
+      req.user = user;
+      return next();
+    }
+
+    return res.status(401).json({ error: 'Invalid token.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Authentication verification failed.' });
+  }
+}
+
+// 2. Admin Access Check (/admin upload, edit & delete routes ke liye)
+async function verifyAdmin(req, res, next) {
+  const expectedEmail = process.env.ADMIN_EMAIL || 'admin@studyhub.in';
+  const expectedPin = process.env.ADMIN_SECRET_PIN || '2026';
+
+  const adminEmail = req.headers['x-admin-email'];
+  const adminPin = req.headers['x-admin-pin'];
+
+  if (adminEmail === expectedEmail && adminPin === expectedPin) {
+    return next();
+  }
+
+  return res.status(403).json({ error: 'Invalid Admin Email or PIN.' });
+}
+
+module.exports = { verifyAuth, verifyAdmin };
+    
