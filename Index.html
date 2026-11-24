@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyHub — Learn • Prepare • Achieve</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <svg width="38" height="38" viewBox="0 0 40 40" fill="none">
+          <path d="M20 5L3 13L20 21L37 13L20 5Z" fill="#0B1B3B"/>
+          <path d="M9 17V26C9 29 14 32 20 32C26 32 31 29 31 26V17L20 22.5L9 17Z" fill="#0A49D8"/>
+          <circle cx="34" cy="22" r="2.2" fill="#FACC15"/>
+        </svg>
+        <div>
+          <div class="brand-title">Study<span>Hub</span></div>
+          <span class="brand-sub">Learn • Prepare • Achieve</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="#catalog" class="nav-link">Resources ▾</a>
+        <a href="/library" class="nav-link">My Library</a>
+        <a href="/admin" class="nav-link">Admin</a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="search-box">
+          <span>🔍</span>
+          <input id="globalSearch" type="text" placeholder="Search resources..." />
+        </div>
+        <div id="authArea">
+          <button class="btn btn-outline btn-sm" onclick="openAuthModal()">Login</button>
+          <button class="btn btn-primary btn-sm" onclick="openAuthModal()">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-pill">⚡ Your Success, Our Mission</div>
+        <h1>Prepare Smarter,<br /><span>Score</span> Higher!</h1>
+        <p>StudyHub is your complete study companion for competitive exams like UPSC, NDA, UPSSSC, SSC, Polytechnic, and B.A. Get premium notes, PYQs, and video lectures — all in one place.</p>
+        <div class="hero-cta">
+          <a href="#catalog" class="btn btn-primary">⬇ Explore Resources →</a>
+          <button class="btn btn-outline" onclick="openDemoVideo()">▶ Watch Demo</button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div>
+          <div class="handwritten">Better Preparation<br />Brighter Future</div>
+          <div class="handwritten-line"></div>
+          <p style="font-size:12.5px;margin-top:12px;max-width:190px;color:#334155;">Instant PDF access with 2-page free sample & UPI checkout.</p>
+        </div>
+        <div class="student-badge">
+          <div style="font-size:44px;">🎓</div>
+          <div style="font-weight:800;font-size:18px;margin-top:4px;">StudyHub</div>
+          <div class="notebook-card">Dream Big<br />Achieve More</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Trust Bar -->
+  <div class="trust-wrap">
+    <div class="trust-bar">
+      <div class="trust-item">📘 Premium Study Material</div>
+      <div class="trust-item">🎯 Exam-Oriented Content</div>
+      <div class="trust-item">⚡ Instant Access</div>
+      <div class="trust-item">🛡️ Secure & Reliable</div>
+      <div class="trust-item">🎧 24/7 Support</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Our Resources</div>
+        <h2 class="section-title">Study Resources</h2>
+        <p class="section-sub">Access high-quality study materials designed to help you ace your exams.</p>
+      </div>
+      <a href="#catalog" class="btn btn-outline btn-sm" onclick="setCategory('All')">View All Resources →</a>
+    </div>
+
+    <!-- 4 Pastel Exam Cards + Dark Navy Promo Card -->
+    <div class="resources-layout">
+      <div class="cat-grid">
+        <div class="cat-card cat-upsc" onclick="jumpToCategory('UPSC')">
+          <div class="cat-icon">🏛️</div>
+          <h3>UPSC</h3>
+          <p>Civil Services Exam</p>
+          <div class="cat-footer"><span class="cat-pill">15+ Resources</span><span class="arrow-circle">→</span></div>
+        </div>
+        <div class="cat-card cat-nda" onclick="jumpToCategory('NDA')">
+          <div class="cat-icon">🎖️</div>
+          <h3>NDA</h3>
+          <p>National Defence Academy</p>
+          <div class="cat-footer"><span class="cat-pill">10+ Resources</span><span class="arrow-circle">→</span></div>
+        </div>
+        <div class="cat-card cat-upsssc" onclick="jumpToCategory('UPSSSC')">
+          <div class="cat-icon">📜</div>
+          <h3>UPSSSC</h3>
+          <p>Uttar Pradesh Exams</p>
+          <div class="cat-footer"><span class="cat-pill">20+ Resources</span><span class="arrow-circle">→</span></div>
+        </div>
+        <div class="cat-card cat-other" onclick="jumpToCategory('All')">
+          <div class="cat-icon">📚</div>
+          <h3>Other Exams</h3>
+          <p>SSC, Polytechnic & B.A.</p>
+          <div class="cat-footer"><span class="cat-pill">25+ Resources</span><span class="arrow-circle">→</span></div>
+        </div>
+      </div>
+
+      <aside class="promo-card">
+        <div>
+          <div style="font-size:40px;">🏆</div>
+          <div class="promo-title">Your Goal<br />Our Support</div>
+        </div>
+        <div class="promo-stats">
+          <div class="promo-stat"><strong>50+</strong><span>Materials</span></div>
+          <div class="promo-stat"><strong>10K+</strong><span>Students</span></div>
+          <div class="promo-stat"><strong>100%</strong><span>Dedication</span></div>
+        </div>
+        <a href="#catalog" class="btn btn-gold" style="width:100%;">Start Learning Now →</a>
+      </aside>
+    </div>
+
+    <!-- Browse, Search & Filter Catalog -->
+    <section id="catalog">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Browse & Filter</div>
+          <h2 class="section-title">All Notes & Video Lectures</h2>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <div class="chip-group" id="categoryChips">
+          <button class="chip active" data-cat="All">All</button>
+          <button class="chip" data-cat="UPSC">UPSC</button>
+          <button class="chip" data-cat="NDA">NDA</button>
+          <button class="chip" data-cat="UPSSSC">UPSSSC</button>
+          <button class="chip" data-cat="SSC">SSC</button>
+          <button class="chip" data-cat="Polytechnic">Polytechnic</button>
+          <button class="chip" data-cat="B.A.">B.A.</button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <select id="typeFilter" class="filter-select">
+            <option value="all">All Formats</option>
+            <option value="pdf">PDF Notes</option>
+            <option value="video">Video Lectures</option>
+          </select>
+          <select id="priceFilter" class="filter-select">
+            <option value="all">Free & Paid</option>
+            <option value="free">Free (₹0)</option>
+            <option value="paid">Paid Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="catalogGrid" class="catalog-grid"></div>
+    </section>
+  </main>
+
+  <!-- Auth OTP Modal -->
+  <div id="authModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Student Login / Sign Up</h3>
+        <button class="close-btn" onclick="closeModal('authModal')">×</button>
+      </div>
+      <p style="font-size:13.5px;color:#475569;margin-bottom:14px;">Email OTP se instant login karein aur apne purchased PDFs anytime <b>My Library</b> mein access karein.</p>
+      <div class="field">
+        <label>Full Name</label>
+        <input id="authName" type="text" placeholder="e.g., Dharmendra" />
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input id="authEmail" type="email" placeholder="student@studyhub.in" />
+      </div>
+      <button id="sendOtpBtn" class="btn btn-primary" style="width:100%;" onclick="sendOtp()">Send OTP</button>
+
+      <div id="otpStep" style="display:none;margin-top:16px;border-top:1px solid #E2E8F0;padding-top:14px;">
+        <div class="field">
+          <label>Enter 6-Digit OTP <span id="otpHint" style="color:#0A49D8;"></span></label>
+          <input id="authOtp" type="text" maxlength="6" placeholder="123456" />
+        </div>
+        <button class="btn btn-gold" style="width:100%;" onclick="verifyOtp()">Verify & Login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-Page Sample Preview Modal -->
+  <div id="previewModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 id="previewTitle">2-Page Sample Preview</h3>
+        <button class="close-btn" onclick="closeModal('previewModal')">×</button>
+      </div>
+      <div class="sample-page">
+        <strong>Page 1 of 2 — Chapter Overview & Syllabus Coverage</strong>
+        <p id="previewDesc" style="margin-top:6px;font-size:13.5px;color:#334155;"></p>
+      </div>
+      <div class="sample-page">
+        <strong>Page 2 of 2 — High-Yield Exam Key Points</strong>
+        <ul style="margin:6px 0 0 18px;font-size:13.5px;color:#334155;">
+          <li>Structured short revision tables & previous year trends.</li>
+          <li>Highlighted important articles, formulas, and one-liners.</li>
+          <li>Practice MCQs with detailed answer explanations.</li>
+        </ul>
+      </div>
+      <div class="locked-page">
+        <div style="font-size:26px;">🔒</div>
+        <strong>Page 3 onwards is locked</strong>
+        <p style="font-size:13px;margin:6px 0 14px;">Complete PDF download aur lifetime My Library access ke liye unlock karein.</p>
+        <button id="previewUnlockBtn" class="btn btn-primary">Unlock Full PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Player Modal -->
+  <div id="videoModal" class="modal-backdrop">
+    <div class="modal" style="max-width:720px;">
+      <div class="modal-head">
+        <h3 id="videoTitle">StudyHub Video Lecture</h3>
+        <button class="close-btn" onclick="closeModal('videoModal')">×</button>
+      </div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;">
+        <iframe id="videoFrame" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Built-in Test UPI/Razorpay Checkout Modal (Used in Local Mode) -->
+  <div id="checkoutModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>StudyHub Secure Checkout (INR)</h3>
+        <button class="close-btn" onclick="closeModal('checkoutModal')">×</button>
+      </div>
+      <div class="sample-page">
+        <div style="font-size:13px;color:#475569;">Selected Study Material</div>
+        <strong id="chkTitle" style="font-size:16px;"></strong>
+        <div style="font-size:24px;font-weight:800;color:#0A49D8;margin-top:8px;">₹<span id="chkPrice">0</span></div>
+      </div>
+      <div class="field">
+        <label>Payment Method (Test Mode)</label>
+        <select>
+          <option>UPI / QR Code (GPay, PhonePe, Paytm)</option>
+          <option>Debit / Credit Card</option>
+          <option>Netbanking</option>
+        </select>
+      </div>
+      <button class="btn btn-gold" style="width:100%;" onclick="confirmDemoPayment()">Pay Now & Unlock Instantly →</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
+  
