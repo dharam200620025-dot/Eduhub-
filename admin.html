@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — StudyHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="nav-inner">
+      <a href="/" class="brand"><div class="brand-title">Study<span>Hub</span> Admin</div></a>
+      <div style="display:flex;gap:10px;">
+        <a href="/" class="btn btn-outline btn-sm">View Portal</a>
+        <button id="adminLogoutBtn" class="btn btn-danger btn-sm" style="display:none;" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:32px;">
+    <!-- Protected Login Gate -->
+    <section id="loginGate" class="panel" style="max-width:440px;margin:40px auto;">
+      <h2 style="margin-bottom:6px;">Protected Admin Login</h2>
+      <p style="font-size:13.5px;color:#475569;margin-bottom:16px;">Default: <b>admin@studyhub.in</b> | PIN: <b>2026</b></p>
+      <div class="field">
+        <label>Admin Email</label>
+        <input id="adminEmail" type="email" value="admin@studyhub.in" />
+      </div>
+      <div class="field">
+        <label>Secret PIN</label>
+        <input id="adminPin" type="password" value="2026" />
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="adminLogin()">Access Admin Panel →</button>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="adminApp" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-box"><span>Total Revenue (INR)</span><strong id="stRevenue">₹0</strong></div>
+        <div class="stat-box"><span>Total Students</span><strong id="stStudents">0</strong></div>
+        <div class="stat-box"><span>Total Downloads</span><strong id="stDownloads">0</strong></div>
+        <div class="stat-box"><span>Active Resources</span><strong id="stResources">0</strong></div>
+      </div>
+
+      <!-- Upload Manager -->
+      <div class="panel">
+        <h3 style="margin-bottom:14px;">Upload New PDF Note / Video Lecture</h3>
+        <form id="uploadForm">
+          <div class="form-grid">
+            <div class="field">
+              <label>Title</label>
+              <input name="title" required placeholder="e.g., SSC CGL 2027 Maths Formula Book" />
+            </div>
+            <div class="field">
+              <label>Category</label>
+              <select name="category">
+                <option>UPSC</option><option>NDA</option><option>UPSSSC</option>
+                <option>SSC</option><option>Polytechnic</option><option>B.A.</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Subject Tag</label>
+              <input name="subject" placeholder="e.g., Polity, DBMS, Economics" />
+            </div>
+            <div class="field">
+              <label>Resource Type</label>
+              <select name="resource_type" id="resTypeSelect">
+                <option value="pdf">PDF Notes</option>
+                <option value="video">Video Lecture</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Pricing</label>
+              <select name="is_free" id="isFreeSelect">
+                <option value="false">Paid (Razorpay INR)</option>
+                <option value="true">Free (₹0 Direct Download)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Price (₹ INR)</label>
+              <input name="price_inr" id="priceInput" type="number" value="49" min="0" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Description</label>
+            <textarea name="description" rows="2" placeholder="Short exam-focused summary..."></textarea>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Upload Main PDF File (.pdf)</label>
+              <input name="pdfFile" type="file" accept="application/pdf" />
+            </div>
+            <div class="field">
+              <label>Unlisted Video Embed URL (For Video Lectures)</label>
+              <input name="video_embed_url" type="url" placeholder="https://www.youtube.com/embed/..." />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">⬆ Publish Resource</button>
+        </form>
+      </div>
+
+      <!-- Content & Price Management Table -->
+      <div class="panel" style="overflow-x:auto;">
+        <h3 style="margin-bottom:14px;">Manage Study Materials & Prices</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th><th>Category</th><th>Type</th><th>Price (₹)</th><th>Downloads</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
+  
